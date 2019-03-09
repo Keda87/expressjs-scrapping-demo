@@ -117,13 +117,12 @@ app.put('/api/kurs', (req, res) => {
         }, (err, kurs) => {
             if(!err) {
                 if(!kurs) {
-                    kurs = new Kurs(payload);
-                } else {
-                    kurs.symbol     = payload.symbol;
-                    kurs.e_rate     = payload.e_rate;
-                    kurs.tt_counter = payload.tt_counter;
-                    kurs.bank_notes = payload.bank_notes;
+                    return res.status(404).json({'message': 'no data found.'})
                 }
+                kurs.symbol     = payload.symbol;
+                kurs.e_rate     = payload.e_rate;
+                kurs.tt_counter = payload.tt_counter;
+                kurs.bank_notes = payload.bank_notes;
                 kurs.save(function(err) {
                     if(!err) {
                         return res.status(200).json(payload);
