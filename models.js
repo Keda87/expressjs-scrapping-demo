@@ -45,11 +45,3 @@ module.exports.create = (meta) => {
         }
     });
 }
-
-module.exports.selectAll = () => {
-    return KursModel.find({}, {'_id': 0, '__v': 0});
-}
-
-module.exports.filter = (params) => {
-    return KursModel.find(params, {'_id': 0, '__v': 0});
-}

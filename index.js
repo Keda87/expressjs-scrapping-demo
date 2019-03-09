@@ -27,7 +27,31 @@ app.delete('/api/kurs/:date', (req, res) => {
 });
 
 app.get('/api/kurs', (req, res) => {
-    model.selectAll()
+    let params     = {'date': {}},
+        queryStart = req.query.startdate,
+        queryEnd   = req.query.enddate,
+        hasDate    = false;
+    
+    if (queryStart !== undefined) {
+        hasDate =  true;
+        if (utils.isValidDate(queryStart)) {
+            params['date']['$gte'] = new Date(queryStart);
+        } else {
+            return res.status(400).json({'message': 'invalid date in start date.'})
+        }
+    }
+
+    if (queryEnd !== undefined) {
+        hasDate =  true;
+        if (utils.isValidDate(queryEnd)) {
+            params['date']['$lte'] = new Date(queryEnd);
+        } else {
+            return res.status(400).json({'message': 'invalid date in end date.'})
+        }
+    }
+
+    model.Kurs
+    .find(!hasDate ? {} : params, {'_id': 0, '__v': 0})
     .lean()
     .exec((err, kurs) => {
         return res.status(200).json({'results': kurs});
