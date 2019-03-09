@@ -26,7 +26,7 @@ describe('List available kurs API Testing', () => {
 });
 
 describe('Submit new kurs API testing', () => {
-    it('it should be save new kurs data to database.', (done) => {
+    it('It should be save new kurs data to database.', (done) => {
         chai.request('localhost:7000')
         .post('/api/kurs')
         .type('json')
@@ -54,7 +54,7 @@ describe('Submit new kurs API testing', () => {
 });
 
 describe('Submit new kurs API testing with invalid schema', () => {
-    it('it should be show error message.', (done) => {
+    it('It should be show error message.', (done) => {
         chai.request('localhost:7000')
         .post('/api/kurs')
         .type('json')
@@ -70,7 +70,7 @@ describe('Submit new kurs API testing with invalid schema', () => {
 });
 
 describe('Submit new kurs API testing with invalid date format', () => {
-    it('it should be show error message.', (done) => {
+    it('It should be show error message.', (done) => {
         chai.request('localhost:7000')
         .post('/api/kurs')
         .type('json')
@@ -98,7 +98,7 @@ describe('Submit new kurs API testing with invalid date format', () => {
 });
 
 describe('Delete kurs API testing', () => {
-    it('it should remove all data in selected data.', (done) => {
+    it('It should remove all data in selected data.', (done) => {
         chai.request('localhost:7000')
         .delete('/api/kurs/2019-03-09')
         .end((err, res) => {
@@ -108,3 +108,30 @@ describe('Delete kurs API testing', () => {
     });
 });
 
+describe('Submit kurs update API testing with invalid data', () => {
+    it('It should display 404 error.', (done) => {
+        chai.request('localhost:7000')
+        .put('/api/kurs')
+        .type('json')
+        .send({
+            "symbol": "NO_DATA",
+            "e_rate": {
+                "jual": "666",
+                "beli": "999"
+            },
+            "tt_counter": {
+                "jual": "999",
+                "beli": "999"
+            },
+            "bank_notes": {
+                "jual": "999",
+                "beli": "666"
+            },
+            "date": "2019-09-19"
+        })
+        .end((err, res) => {
+            expect(res.statusCode).to.equal(404);
+        });
+        done()
+    });
+});
