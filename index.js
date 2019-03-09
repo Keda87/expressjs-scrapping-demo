@@ -71,31 +71,54 @@ app.get('/api/kurs/:symbol', (req, res) => {
 });
 
 app.post('/api/kurs', (req, res) => {
-    let payload = req.body;
-
-    Object.keys(payload).map(function(key, index) {
-        let data = payload[key];
-        if (key === 'date') {
-            if (utils.isValidDate(data)) {
-                payload[key] = new Date(data);
-            } else {
-                return res.status(400).json({'message': 'invalid date format.'});
-            }
+    try {
+        payload = utils.normalizePayload(req.body);
+        let kurs  = new model.Kurs(payload);
+        let error = kurs.validateSync();
+        if (error !== undefined) {
+            return res.status(400).json({'message': 'Invalid kurs schema'});
         }
-    });
-
-    let kurs  = new model.Kurs(payload);
-    let error = kurs.validateSync();
-    if (error !== undefined) {
-        return res.status(400).json({'message': 'Invalid kurs schema'});
+        kurs.save();
+        return res.status(201).json(req.body);
+    } catch(err) {
+        return res.status(400).json({'message': err});
     }
-    kurs.save();
-    return res.status(201).json(req.body);
 });
 
 app.put('/api/kurs', (req, res) => {
+    try {
+        payload = utils.normalizePayload(req.body);
 
+        model.Kurs.findOne({
+            symbol: payload.symbol,
+            date: new Date(payload.date)
+        }, (err, kurs) => {
+            if(!err) {
+                if(!kurs) {
+                    kurs = new Kurs(payload);
+                } else {
+                    kurs.symbol     = payload.symbol;
+                    kurs.e_rate     = payload.e_rate;
+                    kurs.tt_counter = payload.tt_counter;
+                    kurs.bank_notes = payload.bank_notes;
+                }
+                kurs.save(function(err) {
+                    if(!err) {
+                        return res.status(200).json(payload);
+                        console.log('data updated.');
+                    }
+                    else {
+                        console.log('failed to update data');
+                    }
+                });
+            }
+        });
+    } catch(err) {
+        return res.status(400).json({'message': err});
+    }
 });
 
-const port = 7000
-app.listen(port, () => console.log(`BCA kurs app listening on port ${port}`));
+const port = 7000;
+app.listen(port, () => {
+    console.log(`BCA kurs app listening on port ${port}`);
+});

@@ -62,3 +62,17 @@ module.exports.indexingKurs = async () => {
         console.log(err);
     });
 };
+
+module.exports.normalizePayload = (meta) => {
+    Object.keys(meta).map(function(key, index) {
+        let data = meta[key];
+        if (key === 'date') {
+            if (module.exports.isValidDate(data)) {
+                meta[key] = new Date(data);
+            } else {
+                throw 'invalid date format.';
+            }
+        }
+    });
+    return meta;
+};
