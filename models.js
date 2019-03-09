@@ -15,20 +15,26 @@ mongoose.connection.on('error', (err) => {
 
 const Schema = mongoose.Schema;
 const KursModelSchema = new Schema({
-    'symbol': String,
+    'symbol': {
+        type: String,
+        required: true,
+    },
     'e_rate': {
-        'jual': {type: String},
-        'beli': {type: String},
+        'jual': {type: String, required: true},
+        'beli': {type: String, required: true},
     },
     'tt_counter': {
-        'jual': {type: String},
-        'beli': {type: String},
+        'jual': {type: String, required: true},
+        'beli': {type: String, required: true},
     },
     'bank_notes': {
-        'jual': {type: String},
-        'beli': {type: String},
+        'jual': {type: String, required: true},
+        'beli': {type: String, required: true},
     },
-    'date': Date,
+    'date': {
+        type: Date,
+        required: true,
+    },
 });
 
 

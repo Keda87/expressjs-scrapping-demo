@@ -3,6 +3,7 @@ const utils     = require('./utils');
 const model     = require('./models');
 
 const app  = express();
+app.use(express.json());
 
 app.get('/api/indexing', (req, res) => {
     utils.indexingKurs();
@@ -70,7 +71,26 @@ app.get('/api/kurs/:symbol', (req, res) => {
 });
 
 app.post('/api/kurs', (req, res) => {
+    let payload = req.body;
 
+    Object.keys(payload).map(function(key, index) {
+        let data = payload[key];
+        if (key === 'date') {
+            if (utils.isValidDate(data)) {
+                payload[key] = new Date(data);
+            } else {
+                return res.status(400).json({'message': 'invalid date format.'});
+            }
+        }
+    });
+
+    let kurs  = new model.Kurs(payload);
+    let error = kurs.validateSync();
+    if (error !== undefined) {
+        return res.status(400).json({'message': 'Invalid kurs schema'});
+    }
+    kurs.save();
+    return res.status(201).json(req.body);
 });
 
 app.put('/api/kurs', (req, res) => {
