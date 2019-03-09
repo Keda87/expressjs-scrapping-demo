@@ -1,0 +1,187 @@
+{
+	"info": {
+		"_postman_id": "6c314c22-d6fd-42d3-a37c-6c02f671ab62",
+		"name": "KursAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Delete kurs by date",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:7000/api/kurs/2019-03-09",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "7000",
+					"path": [
+						"api",
+						"kurs",
+						"2019-03-09"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new kurs",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"symbol\": \"CAK\",\n\t\"e_rate\": {\n\t\t\"jual\": \"666\",\n\t\t\"beli\": \"999\"\n\t},\n\t\"tt_counter\": {\n\t\t\"jual\": \"999\",\n\t\t\"beli\": \"999\"\n\t},\n\t\"bank_notes\": {\n\t\t\"jual\": \"999\",\n\t\t\"beli\": \"666\"\n\t},\n\t\"date\": \"2019-03-10\"\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:7000/api/kurs",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "7000",
+					"path": [
+						"api",
+						"kurs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Getting data by specific kurs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:7000/api/kurs/CAK",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "7000",
+					"path": [
+						"api",
+						"kurs",
+						"CAK"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all available data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:7000/api/kurs",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "7000",
+					"path": [
+						"api",
+						"kurs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Indexing kurs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:7000/api/indexing",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "7000",
+					"path": [
+						"api",
+						"indexing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update kurs",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"symbol\": \"CAK\",\n\t\"e_rate\": {\n\t\t\"jual\": \"1\",\n\t\t\"beli\": \"1\"\n\t},\n\t\"tt_counter\": {\n\t\t\"jual\": \"1\",\n\t\t\"beli\": \"1\"\n\t},\n\t\"bank_notes\": {\n\t\t\"jual\": \"1\",\n\t\t\"beli\": \"90\"\n\t},\n\t\"date\": \"2019-03-10\"\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:7000/api/kurs",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "7000",
+					"path": [
+						"api",
+						"kurs"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
